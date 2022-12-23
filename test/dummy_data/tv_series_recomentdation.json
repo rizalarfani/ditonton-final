@@ -1,0 +1,30 @@
+{
+    "page": 1,
+    "results": [
+        {
+            "adult": false,
+            "backdrop_path": "/ewiNrS8xiMpxhrw3ovo0cBMcirt.jpg",
+            "id": 2146,
+            "name": "Good Luck!!",
+            "original_language": "ja",
+            "original_name": "GOOD LUCK",
+            "overview": "Good Luck!! is a 2003 Japanese television drama starring Takuya Kimura and Kou Shibasaki. The story revolves around an up-and-coming pilot, Hajime Shinkai, and portrays his interactions with others as he progresses along the road to becoming a captain. As is common in many Japanese drama series, it blends drama and romance with comedic elements. This drama also emphasizes hardship of being a pilot or a cabin crew, and the serious nature of the industry they're in, which puts thousands of lives in its hands.",
+            "poster_path": "/dZtbggJpUtSoVSPamskkksKYW7q.jpg",
+            "media_type": "tv",
+            "genre_ids": [
+                18,
+                10765,
+                35
+            ],
+            "popularity": 3.197,
+            "first_air_date": "2003-01-19",
+            "vote_average": 7.0,
+            "vote_count": 6,
+            "origin_country": [
+                "JP"
+            ]
+        }
+    ],
+    "total_pages": 2,
+    "total_results": 40
+}
