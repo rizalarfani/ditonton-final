@@ -1,13 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/entities/tv_series.dart';
+import 'package:ditonton/presentation/bloc/on_air_tv_bloc.dart';
+import 'package:ditonton/presentation/bloc/popular_tv_bloc.dart';
+import 'package:ditonton/presentation/bloc/top_rated_tv_bloc.dart';
 import 'package:ditonton/presentation/pages/on_air_tv_series.dart';
 import 'package:ditonton/presentation/pages/top_raled_tv_series.dart';
 import 'package:ditonton/presentation/pages/popular_tv_series.dart';
 import 'package:ditonton/presentation/pages/tv_series_detail_page.dart';
-import 'package:ditonton/presentation/provider/tv_series_list_notifier.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../common/constants.dart';
 import '../widgets/sub_heading.dart';
@@ -24,10 +25,9 @@ class _TvSeriesPageState extends State<TvSeriesPage> {
   void initState() {
     super.initState();
     Future.microtask(() {
-      Provider.of<TvSeriesListNotifier>(context, listen: false)
-        ..fetchPopularTvSeries()
-        ..fetchTopRelatedTvSeries()
-        ..fetchOnAirTvSeries();
+      context.read<OnAirTvBloc>().add(GetOnAirTv());
+      context.read<PopularTvBloc>().add(GetPopularTv());
+      context.read<TopRatedTvBloc>().add(GetTopRatedTv());
     });
   }
 
@@ -49,21 +49,20 @@ class _TvSeriesPageState extends State<TvSeriesPage> {
                   );
                 },
               ),
-              Consumer<TvSeriesListNotifier>(
-                builder: (context, data, child) {
-                  final state = data.listTvSeriesOnAirTvSeries;
-                  if (data.stateOnAirTvSeries == RequestState.Loading) {
-                    return const Center(
+              BlocBuilder<OnAirTvBloc, OnAirTvState>(
+                builder: (context, state) {
+                  if (state is OnAirTvLoading || state is OnAirTvInitial) {
+                    return Center(
                       child: CircularProgressIndicator(),
                     );
-                  } else if (data.stateOnAirTvSeries == RequestState.Loaded) {
+                  } else if (state is OnAirTvHastData) {
                     return SizedBox(
                       height: 200,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: state.length,
+                        itemCount: state.results.length,
                         itemBuilder: (context, index) {
-                          TvSeries tvSerie = state[index];
+                          TvSeries tvSerie = state.results[index];
                           return Container(
                             padding: const EdgeInsets.all(8),
                             child: InkWell(
@@ -92,9 +91,15 @@ class _TvSeriesPageState extends State<TvSeriesPage> {
                         },
                       ),
                     );
+                  } else if (state is OnAirTvError) {
+                    return Expanded(
+                      child: Center(
+                        child: Text(state.message),
+                      ),
+                    );
                   } else {
-                    return Center(
-                      child: Text(data.message),
+                    return Expanded(
+                      child: Container(),
                     );
                   }
                 },
@@ -106,21 +111,20 @@ class _TvSeriesPageState extends State<TvSeriesPage> {
                   PopularTvSeries.ROUTE_NAME,
                 ),
               ),
-              Consumer<TvSeriesListNotifier>(
-                builder: (context, data, child) {
-                  final state = data.listTvSeriesPopular;
-                  if (data.statePopular == RequestState.Loading) {
-                    return const Center(
+              BlocBuilder<PopularTvBloc, PopularTvState>(
+                builder: (context, state) {
+                  if (state is PopularTvInitial || state is PopularTvLoading) {
+                    return Center(
                       child: CircularProgressIndicator(),
                     );
-                  } else if (data.statePopular == RequestState.Loaded) {
+                  } else if (state is PopularTvHastData) {
                     return SizedBox(
                       height: 200,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: state.length,
+                        itemCount: state.results.length,
                         itemBuilder: (context, index) {
-                          TvSeries tvSerie = state[index];
+                          TvSeries tvSerie = state.results[index];
                           return Container(
                             padding: const EdgeInsets.all(8),
                             child: InkWell(
@@ -149,9 +153,15 @@ class _TvSeriesPageState extends State<TvSeriesPage> {
                         },
                       ),
                     );
+                  } else if (state is PopularTvError) {
+                    return Expanded(
+                      child: Center(
+                        child: Text(state.message),
+                      ),
+                    );
                   } else {
-                    return Center(
-                      child: Text(data.message),
+                    return Expanded(
+                      child: Container(),
                     );
                   }
                 },
@@ -163,21 +173,21 @@ class _TvSeriesPageState extends State<TvSeriesPage> {
                   TopRaledTvSeries.ROUTE_NAME,
                 ),
               ),
-              Consumer<TvSeriesListNotifier>(
-                builder: (context, data, child) {
-                  final state = data.listTvSeriesTopRaled;
-                  if (data.stateTopRaled == RequestState.Loading) {
-                    return const Center(
+              BlocBuilder<TopRatedTvBloc, TopRatedTvState>(
+                builder: (context, state) {
+                  if (state is TopRatedTvInitial ||
+                      state is TopRatedTvLoading) {
+                    return Center(
                       child: CircularProgressIndicator(),
                     );
-                  } else if (data.stateTopRaled == RequestState.Loaded) {
+                  } else if (state is TopRatedTvHastData) {
                     return SizedBox(
                       height: 200,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: state.length,
+                        itemCount: state.results.length,
                         itemBuilder: (context, index) {
-                          TvSeries tvSerie = state[index];
+                          TvSeries tvSerie = state.results[index];
                           return Container(
                             padding: const EdgeInsets.all(8),
                             child: InkWell(
@@ -206,9 +216,15 @@ class _TvSeriesPageState extends State<TvSeriesPage> {
                         },
                       ),
                     );
+                  } else if (state is TopRatedTvError) {
+                    return Expanded(
+                      child: Center(
+                        child: Text(state.message),
+                      ),
+                    );
                   } else {
-                    return Center(
-                      child: Text(data.message),
+                    return Expanded(
+                      child: Container(),
                     );
                   }
                 },
