@@ -1,12 +1,12 @@
+import 'package:ditonton/presentation/bloc/bottom_navigation_bloc.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/home_movie_page.dart';
 import 'package:ditonton/presentation/pages/search_page_movie.dart';
 import 'package:ditonton/presentation/pages/search_page_tv.dart';
 import 'package:ditonton/presentation/pages/tv_series_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_page.dart';
-import 'package:ditonton/presentation/provider/bottom_navigation_notifier.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -37,58 +37,77 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Ditonton'),
         actions: [
-          Consumer<BottomNavigationNotifier>(
-            builder: (context, state, _) {
-              return IconButton(
-                onPressed: () {
-                  if (state.currentIndex == 0) {
-                    Navigator.pushNamed(context, SearchPageMovie.ROUTE_NAME);
-                  } else {
-                    Navigator.pushNamed(context, SearchPageTv.ROUTE_NAME);
-                  }
-                },
-                icon: Icon(Icons.search),
-              );
+          BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
+            builder: (context, state) {
+              if (state is CurrentIndex) {
+                return IconButton(
+                  onPressed: () {
+                    if (state.index == 0) {
+                      Navigator.pushNamed(context, SearchPageMovie.ROUTE_NAME);
+                    } else {
+                      Navigator.pushNamed(context, SearchPageTv.ROUTE_NAME);
+                    }
+                  },
+                  icon: Icon(Icons.search),
+                );
+              } else {
+                return Container();
+              }
             },
           ),
         ],
       ),
-      body: Consumer<BottomNavigationNotifier>(
-        builder: (context, state, _) => IndexedStack(
-          index: state.currentIndex,
-          children: [
-            HomeMoviePage(),
-            TvSeriesPage(),
-            WatchlistPage(),
-          ],
-        ),
+      body: BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
+        builder: (context, state) {
+          if (state is CurrentIndex) {
+            return IndexedStack(
+              index: state.index,
+              children: [
+                HomeMoviePage(),
+                TvSeriesPage(),
+                WatchlistPage(),
+              ],
+            );
+          } else {
+            return Container();
+          }
+        },
       ),
-      bottomNavigationBar: Consumer<BottomNavigationNotifier>(
-        builder: (context, state, _) => BottomNavigationBar(
-          currentIndex: state.currentIndex,
-          onTap: (value) => state.currentIndex = value,
-          showUnselectedLabels: false,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.movie_creation_outlined,
-              ),
-              label: 'Movie',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.tv_rounded,
-              ),
-              label: 'Tv Series',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.save_alt,
-              ),
-              label: 'Watchlist',
-            )
-          ],
-        ),
+      bottomNavigationBar:
+          BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
+        builder: (context, state) {
+          if (state is CurrentIndex) {
+            return BottomNavigationBar(
+              currentIndex: state.index,
+              onTap: (value) => context
+                  .read<BottomNavigationBloc>()
+                  .add(ChangeCurrentIndex(value)),
+              showUnselectedLabels: false,
+              items: <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.movie_creation_outlined,
+                  ),
+                  label: 'Movie',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.tv_rounded,
+                  ),
+                  label: 'Tv Series',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.save_alt,
+                  ),
+                  label: 'Watchlist',
+                )
+              ],
+            );
+          } else {
+            return Container();
+          }
+        },
       ),
     );
   }
