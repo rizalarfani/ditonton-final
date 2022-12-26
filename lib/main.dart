@@ -110,7 +110,9 @@ class MyApp extends StatelessWidget {
           textTheme: kTextTheme,
         ),
         home: HomePage(),
-        navigatorObservers: [routeObserver],
+        navigatorObservers: [
+          routeObserver,
+        ],
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
             case '/home':
