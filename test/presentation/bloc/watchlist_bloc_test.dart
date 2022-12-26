@@ -12,7 +12,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../dummy_data/dummy_objects.dart';
-import '../provider/watchlist_movie_notifier_test.mocks.dart';
+import 'watchlist_bloc_test.mocks.dart';
 
 @GenerateMocks([GetWatchlistMovies, GetWatchlistTvSeries])
 void main() {

@@ -27,4 +27,14 @@ void main() {
     // assert
     expect(result, true);
   });
+
+  test('should get watchlist status from repository tv series', () async {
+    // arrange
+    when(mockTvSeriesRepository.isAddedToWatchlistTv(1))
+        .thenAnswer((_) async => true);
+    // act
+    final result = await usecase.executeTvSeries(1);
+    // assert
+    expect(result, true);
+  });
 }

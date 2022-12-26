@@ -82,7 +82,7 @@ class TvSeriesRepositoryImplement extends TvSeriesRepository {
   @override
   Future<Either<Failure, List<TvSeries>>> searchTvSeries(String query) async {
     try {
-      final result = await remoteDataSource.searchMovies(query);
+      final result = await remoteDataSource.searchTvSeries(query);
       return Right(result.map((model) => model.toEntity()).toList());
     } on ServerException {
       return Left(ServerFailure(''));

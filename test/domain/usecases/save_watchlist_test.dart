@@ -20,11 +20,22 @@ void main() {
   test('should save movie to the repository', () async {
     // arrange
     when(mockMovieRepository.saveWatchlist(testMovieDetail))
-        .thenAnswer((_) async => Right('Added to Watchlist'));
+        .thenAnswer((_) async => Right('Added to Watchlist Movie'));
     // act
     final result = await usecase.execute(testMovieDetail);
     // assert
     verify(mockMovieRepository.saveWatchlist(testMovieDetail));
-    expect(result, Right('Added to Watchlist'));
+    expect(result, Right('Added to Watchlist Movie'));
+  });
+
+  test('should save tv series to the repository', () async {
+    // arrange
+    when(mockTvSeriesRepository.saveWatchlistTv(testTvDetail))
+        .thenAnswer((_) async => Right('Added to Watchlist Tv Series'));
+    // act
+    final result = await usecase.executeTvSeries(testTvDetail);
+    // assert
+    verify(mockTvSeriesRepository.saveWatchlistTv(testTvDetail));
+    expect(result, Right('Added to Watchlist Tv Series'));
   });
 }
