@@ -31,7 +31,17 @@ class DetailMovieHasData extends MovieDetailState {
   List<Object> get props => [results];
 }
 
-class IsAddedtoWatchlist extends MovieDetailState {
+// MovieWatchlist
+abstract class MovieWatchlist extends Equatable {
+  const MovieWatchlist();
+
+  @override
+  List<Object> get props => [];
+}
+
+class MovieWatchlistInitial extends MovieWatchlist {}
+
+class IsAddedtoWatchlist extends MovieWatchlist {
   final bool isAddedtoWatchlist;
 
   IsAddedtoWatchlist(this.isAddedtoWatchlist);
@@ -40,7 +50,7 @@ class IsAddedtoWatchlist extends MovieDetailState {
   List<Object> get props => [isAddedtoWatchlist];
 }
 
-class WatchlistMessage extends MovieDetailState {
+class WatchlistMessage extends MovieWatchlist {
   final String message;
 
   WatchlistMessage(this.message);

@@ -165,15 +165,20 @@ void init() {
   locator.registerFactory(
     () => MovieDetailBloc(
       getMovieDetail: locator(),
-      getWatchListStatus: locator(),
-      saveWatchlist: locator(),
-      removeWatchlist: locator(),
     ),
   );
 
   locator.registerFactory(
     () => MoviesRecomendationBloc(
       getMovieRecommendations: locator(),
+    ),
+  );
+
+  locator.registerFactory(
+    () => MovieWatchlistBloc(
+      getWatchListStatus: locator(),
+      saveWatchlist: locator(),
+      removeWatchlist: locator(),
     ),
   );
 

@@ -26,11 +26,12 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
     context
         .read<MoviesRecomendationBloc>()
         .add(GetMovieRecommendation(widget.id));
+    context.read<MovieWatchlistBloc>().add(LoadWatchlistStatus(widget.id));
   }
 
   @override
   Widget build(BuildContext context) {
-    final moviedDetailState = context.watch<MovieDetailBloc>().state;
+    final watchlistState = context.watch<MovieWatchlistBloc>().state;
     return Scaffold(
       body: BlocBuilder<MovieDetailBloc, MovieDetailState>(
         builder: (context, state) {
@@ -43,8 +44,8 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
             return SafeArea(
               child: DetailContent(
                   movie,
-                  (moviedDetailState is IsAddedtoWatchlist)
-                      ? moviedDetailState.isAddedtoWatchlist
+                  (watchlistState is IsAddedtoWatchlist)
+                      ? watchlistState.isAddedtoWatchlist
                       : false),
             );
           } else if (state is DetailMovieError) {
@@ -110,24 +111,28 @@ class DetailContent extends StatelessWidget {
                               onPressed: () async {
                                 if (!isAddedWatchlist) {
                                   context
-                                      .read<MovieDetailBloc>()
+                                      .read<MovieWatchlistBloc>()
                                       .add(AddWatchlist(movie));
                                 } else {
                                   context
-                                      .read<MovieDetailBloc>()
+                                      .read<MovieWatchlistBloc>()
                                       .add(RemoveWatchlistMovie(movie));
                                 }
-
-                                // final message =
-                                //     context.watch<WatchlistMessage>().message;
-                                // showDialog(
-                                //   context: context,
-                                //   builder: (context) {
-                                //     return AlertDialog(
-                                //       content: Text(message),
-                                //     );
-                                //   },
-                                // );
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      content: Text(isAddedWatchlist
+                                          ? MovieWatchlistBloc
+                                              .watchlistRemoveSuccessMessage
+                                          : MovieWatchlistBloc
+                                              .watchlistAddSuccessMessage),
+                                    );
+                                  },
+                                );
+                                context
+                                    .read<MovieWatchlistBloc>()
+                                    .add(LoadWatchlistStatus(movie.id));
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,

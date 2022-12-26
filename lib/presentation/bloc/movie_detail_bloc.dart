@@ -10,19 +10,10 @@ part 'movie_detail_event.dart';
 part 'movie_detail_state.dart';
 
 class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
-  static const watchlistAddSuccessMessage = 'Added to Watchlist Movie';
-  static const watchlistRemoveSuccessMessage = 'Removed from Watchlist Movie';
-
   final GetMovieDetail getMovieDetail;
-  final GetWatchListStatus getWatchListStatus;
-  final SaveWatchlist saveWatchlist;
-  final RemoveWatchlist removeWatchlist;
 
   MovieDetailBloc({
     required this.getMovieDetail,
-    required this.getWatchListStatus,
-    required this.saveWatchlist,
-    required this.removeWatchlist,
   }) : super(DetailMovieInitial()) {
     on<GetDetailMovie>((event, emit) async {
       emit(MovieDetailLoading());
@@ -34,7 +25,22 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
         emit(DetailMovieHasData(data));
       });
     });
+  }
+}
 
+class MovieWatchlistBloc extends Bloc<MovieDetailEvent, MovieWatchlist> {
+  final GetWatchListStatus getWatchListStatus;
+  final SaveWatchlist saveWatchlist;
+  final RemoveWatchlist removeWatchlist;
+
+  static const watchlistAddSuccessMessage = 'Added to Watchlist Movie';
+  static const watchlistRemoveSuccessMessage = 'Removed from Watchlist Movie';
+
+  MovieWatchlistBloc({
+    required this.getWatchListStatus,
+    required this.saveWatchlist,
+    required this.removeWatchlist,
+  }) : super(MovieWatchlistInitial()) {
     on<AddWatchlist>((event, emit) async {
       final result = await saveWatchlist.execute(event.movie);
 

@@ -91,6 +91,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => di.locator<MoviesRecomendationBloc>(),
         ),
+        BlocProvider(
+          create: (_) => di.locator<MovieWatchlistBloc>(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
