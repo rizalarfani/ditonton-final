@@ -1,6 +1,6 @@
 # Final Submision Dicoding flutter expert Dicoding Indonesia
 
-[![Codemagic build status](https://api.codemagic.io/apps/6399efac2e5a488e9f70e0a4/6399efac2e5a488e9f70e0a3/status_badge.svg)](https://codemagic.io/app/63a9665495a513fae298b90a/build/63a9677596636e520d55c6f4/latest_build)
+[![Codemagic build status](https://api.codemagic.io/apps/6399efac2e5a488e9f70e0a4/6399efac2e5a488e9f70e0a3/status_badge.svg)](https://codemagic.io/app/63a9665495a513fae298b90a/build/63a9677596636e520d55c6f4)
 
 Repository ini merupakan final submission Flutter Expert Dicoding Indonesia.
 
