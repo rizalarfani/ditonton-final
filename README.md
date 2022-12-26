@@ -10,7 +10,7 @@ Repository ini merupakan final submission Flutter Expert Dicoding Indonesia.
 
 ## Hasil Dari Firebase Analytics
 
-<img src="firebase_analytics.jpg" title="Firebase Analytics">
+<img src="firebase_analytics.jpeg" title="Firebase Analytics">
 
 ## Hasil Dari Firebase Crashlytics
 
