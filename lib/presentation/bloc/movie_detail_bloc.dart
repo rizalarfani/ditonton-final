@@ -28,7 +28,7 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
   }
 }
 
-class MovieWatchlistBloc extends Bloc<MovieDetailEvent, MovieWatchlist> {
+class MovieWatchlistBloc extends Bloc<MovieDetailEvent, MovieWatchlistState> {
   final GetWatchListStatus getWatchListStatus;
   final SaveWatchlist saveWatchlist;
   final RemoveWatchlist removeWatchlist;

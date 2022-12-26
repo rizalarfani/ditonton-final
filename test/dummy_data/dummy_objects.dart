@@ -3,6 +3,8 @@ import 'package:ditonton/data/models/tv_series_table.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
+import 'package:ditonton/domain/entities/tv_series.dart';
+import 'package:ditonton/domain/entities/tv_series_detail.dart';
 
 final testMovie = Movie(
   adult: false,
@@ -38,6 +40,33 @@ final testMovieDetail = MovieDetail(
   voteCount: 1,
 );
 
+final testTvSeries = TvSeries(
+  posterPath: 'posterPath',
+  popularity: 1,
+  id: 1,
+  backdropPath: 'backdropPath',
+  voteAverage: 4,
+  overview: 'overview',
+  genreIds: [10, 20],
+  name: 'name',
+);
+
+final testTvDetail = TvSeriesDetail(
+  genres: [Genre(id: 1, name: 'Action')],
+  id: 1,
+  overview: 'overview',
+  popularity: 1,
+  posterPath: 'posterPath',
+  voteAverage: 1,
+  voteCount: 1,
+  homePage: 'homePage',
+  name: 'Pride',
+  inProduction: false,
+  numberOfEpisodes: 11,
+  numberOfSeasons: 1,
+  originalName: 'プライド',
+);
+
 final testWatchlistMovie = Movie.watchlist(
   id: 1,
   title: 'title',
@@ -62,6 +91,13 @@ final testMovieMap = {
 final testTvSeriesTable = TvSeriesTable(
   id: 1,
   title: 'title',
+  posterPath: 'posterPath',
+  overview: 'overview',
+);
+
+final testWatchlistTvSeries = TvSeries.watchlist(
+  id: 1,
+  name: 'title',
   posterPath: 'posterPath',
   overview: 'overview',
 );
