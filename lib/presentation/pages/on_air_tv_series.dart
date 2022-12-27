@@ -42,10 +42,9 @@ class _OnAirTvSeriestate extends State<OnAirTvSeries> {
                 itemCount: state.results.length,
               );
             } else if (state is OnAirTvError) {
-              return Expanded(
-                child: Center(
-                  child: Text(state.message),
-                ),
+              return Center(
+                key: Key('error_message'),
+                child: Text(state.message),
               );
             } else {
               return Container();

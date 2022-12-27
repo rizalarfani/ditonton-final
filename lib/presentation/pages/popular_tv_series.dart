@@ -42,10 +42,9 @@ class _PopularTvSeriestate extends State<PopularTvSeries> {
                 itemCount: state.results.length,
               );
             } else if (state is PopularTvError) {
-              return Expanded(
-                child: Center(
-                  child: Text(state.message),
-                ),
+              return Center(
+                key: Key('error_message'),
+                child: Text(state.message),
               );
             } else {
               return Expanded(
