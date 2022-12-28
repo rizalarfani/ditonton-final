@@ -88,6 +88,13 @@ final testMovieMap = {
   'title': 'title',
 };
 
+final testTvMap = {
+  'id': 1,
+  'overview': 'overview',
+  'posterPath': 'posterPath',
+  'title': 'Pride',
+};
+
 final testTvSeriesTable = TvSeriesTable(
   id: 1,
   title: 'Pride',

@@ -73,7 +73,7 @@ void main() {
     test('should return Tv Series Detail Table when data is found', () async {
       // arrange
       when(mockDatabaseHelper.getWatchlistById(id))
-          .thenAnswer((_) async => testMovieMap);
+          .thenAnswer((_) async => testTvMap);
       // act
       final result = await localDataSourceImpl.getTvSeriesById(id);
       // assert
