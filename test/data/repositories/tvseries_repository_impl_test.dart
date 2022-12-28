@@ -343,4 +343,50 @@ void main() {
       expect(resultList, [testWatchlistTvSeries]);
     });
   });
+
+  group('save watchlist', () {
+    test('should return success message when saving successful', () async {
+      // arrange
+      when(localDataSource.insertWatchlistTvSeries(testTvSeriesTable))
+          .thenAnswer((_) async => 'Added to Watchlist Tv Series');
+      // act
+      final result = await repository.saveWatchlistTv(testTvDetail);
+      // assert
+      expect(result, Right('Added to Watchlist Tv Series'));
+    });
+
+    test('should return DatabaseFailure when saving unsuccessful', () async {
+      // arrange
+      when(localDataSource.insertWatchlistTvSeries(testTvSeriesTable))
+          .thenThrow(DatabaseException('Failed to add watchlist Tv Series'));
+      // act
+      final result = await repository.saveWatchlistTv(testTvDetail);
+      // assert
+      expect(
+          result, Left(DatabaseFailure('Failed to add watchlist Tv Series')));
+    });
+  });
+
+  group('remove watchlist', () {
+    test('should return success message when remove successful', () async {
+      // arrange
+      when(localDataSource.removeWatchlist(testTvSeriesTable))
+          .thenAnswer((_) async => 'Removed from watchlist Tv Series');
+      // act
+      final result = await repository.removeWatchlist(testTvDetail);
+      // assert
+      expect(result, Right('Removed from watchlist Tv Series'));
+    });
+
+    test('should return DatabaseFailure when remove unsuccessful', () async {
+      // arrange
+      when(localDataSource.removeWatchlist(testTvSeriesTable))
+          .thenThrow(DatabaseException('Failed to remove watchlist Tv Series'));
+      // act
+      final result = await repository.removeWatchlist(testTvDetail);
+      // assert
+      expect(result,
+          Left(DatabaseFailure('Failed to remove watchlist Tv Series')));
+    });
+  });
 }

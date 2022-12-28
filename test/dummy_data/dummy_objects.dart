@@ -90,14 +90,14 @@ final testMovieMap = {
 
 final testTvSeriesTable = TvSeriesTable(
   id: 1,
-  title: 'title',
+  title: 'Pride',
   posterPath: 'posterPath',
   overview: 'overview',
 );
 
 final testWatchlistTvSeries = TvSeries.watchlist(
   id: 1,
-  name: 'title',
+  name: 'Pride',
   posterPath: 'posterPath',
   overview: 'overview',
 );

@@ -109,6 +109,7 @@ class _WatchlistPageState extends State<WatchlistPage>
                               );
                       } else if (state is WatchlistMovieError) {
                         return Center(
+                          key: Key('error_message'),
                           child: Text(state.message),
                         );
                       } else {
@@ -137,6 +138,7 @@ class _WatchlistPageState extends State<WatchlistPage>
                               );
                       } else if (state is WatchlistTvError) {
                         return Center(
+                          key: Key('error_message'),
                           child: Text(state.message),
                         );
                       } else {
